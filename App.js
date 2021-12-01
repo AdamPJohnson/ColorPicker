@@ -14,9 +14,10 @@ export default function App() {
   const searchForWord = () => {
     if (searchWord.length) {
       axios
-        .get("http://localhost:8080/colors", { word: searchWord })
+        .get(`http://localhost:8080/colors/${searchWord}`)
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
+          setCurrentColors(response.data);
           setWelcome(false);
           setErrorMessage("");
         })
@@ -31,7 +32,7 @@ export default function App() {
     axios
       .get("http://localhost:8080/randomColors/5")
       .then((response) => {
-        console.log(response.data);
+        console.log("weeeee");
         setCurrentColors(response.data);
         setWelcome(false);
         setErrorMessage("");

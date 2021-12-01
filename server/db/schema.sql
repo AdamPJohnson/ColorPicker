@@ -196,3 +196,11 @@ VALUES ('black', '#000000'),
   ('whitesmoke', '#f5f5f5'),
   ('yellow', '#ffff00'),
   ('yellowgreen', '#9acd32');
+INSERT INTO associations (color_id, word_id)
+VALUES (8,3),
+  (10,3),
+  (20,3),
+  (124,3),
+  (128,3),
+  (125,3),
+  (138,3);

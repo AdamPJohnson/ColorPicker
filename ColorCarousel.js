@@ -48,6 +48,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
+
     if (currentColors[-scrollIndex].hex === "#FFFFFF") {
       setButtonColor("#000001");
     }
