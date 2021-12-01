@@ -19,14 +19,15 @@ const fakeColors = [
 ];
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const scrollTopMax = -1 * (fakeColors.length - 1) * windowHeight;
-function ColorCarousel({ setWelcome }) {
+function ColorCarousel({ setWelcome, currentColors }) {
+  const scrollTopMax = -1 * (currentColors.length - 1) * windowHeight;
   const scroll = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
   // const [scroll, setScroll] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showHex, setShowHex] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [color, setColor] = useState("#ffffff");
+  const [buttonColor, setButtonColor] = useState("#ffffff");
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -37,7 +38,7 @@ function ColorCarousel({ setWelcome }) {
     }
   };
   const onScrollDown = () => {
-    if (scrollIndex > -fakeColors.length + 1) {
+    if (scrollIndex > -currentColors.length + 1) {
       setScrollIndex((index) => index - 1);
     }
   };
@@ -47,14 +48,29 @@ function ColorCarousel({ setWelcome }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
+    if (currentColors[-scrollIndex].hex === "#FFFFFF") {
+      setButtonColor("#000001");
+    }
+    if (currentColors[-scrollIndex].hex === "#000000") {
+      setButtonColor("#FFFFFF");
+    }
   }, [scrollIndex]);
-  const colorScroll = fakeColors.map((color) => {
+
+  const colorScroll = currentColors.map((color) => {
     var num = parseInt(color.hex.slice(1), 16);
     var r = Math.max((num >> 16) - 35, 0);
     var b = Math.max(((num >> 8) & 0x00ff) - 35, 0);
     var g = Math.max((num & 0x0000ff) - 35, 0);
     var newColor = g | (b << 8) | (r << 16);
     newColor = "#" + newColor.toString(16);
+
+    if (newColor === "#0" || newColor === "#000000") {
+      newColor = "#fffffe";
+    }
+    if (newColor === "#ffffff") {
+      newColor = "#000001";
+    }
+
     const label = showHex ? color.hex : color.name;
     return (
       <View
@@ -88,25 +104,21 @@ function ColorCarousel({ setWelcome }) {
         {colorScroll}
       </Animated.View>
       <Pressable style={styles.scrollUpButton} onPress={onScrollUp}>
-        <Text style={{ color: "white" }}>
-          <AntDesign name="caretup" />
-        </Text>
+        <AntDesign name="caretup" size={24} color="white" />
       </Pressable>
       <Pressable style={styles.scrollDownButton} onPress={onScrollDown}>
-        <Text style={{ color: "white" }}>
-          <AntDesign name="caretdown" />
-        </Text>
+        <AntDesign name="caretdown" size={24} color="white" />
       </Pressable>
       <Pressable style={styles.backButton} onPress={() => setWelcome(true)}>
-        <AntDesign name="back" size={24} color="white" />
+        <AntDesign name="back" size={24} color={buttonColor} />
       </Pressable>
       <Pressable
         style={styles.copyButton}
         onPress={() => {
-          console.log(fakeColors[-scrollIndex].hex);
+          console.log(currentColors[-scrollIndex].hex);
         }}
       >
-        <Feather name="copy" size={24} color="white" />
+        <Feather name="copy" size={24} color={buttonColor} />
       </Pressable>
       <Pressable
         style={styles.addButton}
@@ -114,7 +126,7 @@ function ColorCarousel({ setWelcome }) {
           setModalVisible(true);
         }}
       >
-        <Ionicons name="ios-add" size={32} color="white" />
+        <Ionicons name="ios-add" size={32} color={buttonColor} />
       </Pressable>
       <Modal
         style={styles.addColorModal}

@@ -3,12 +3,6 @@ import { StyleSheet } from "react-native";
 const bgColor = "white";
 
 const styles = StyleSheet.create({
-  welcomeContainer: {
-    flex: 1,
-    backgroundColor: bgColor,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   container: {
     flex: 1,
     backgroundColor: bgColor,
@@ -91,7 +85,7 @@ const styles = StyleSheet.create({
   innerModal: {
     width: "90%",
     height: "80%",
-    backgroundColor: "white",
+    backgroundColor: "whitesmoke",
     opacity: 0.9,
     borderRadius: 10,
     display: "flex",
