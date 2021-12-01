@@ -15,13 +15,18 @@ function ColorCarousel({ setWelcome }) {
   const scroll = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
   // const [scroll, setScroll] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
+  const [showHex, setShowHex] = useState(false);
+
+  const toggleHex = () => {
+    setShowHex((hex) => !hex);
+  };
   const onScrollUp = () => {
     if (scrollIndex < 0) {
       setScrollIndex((index) => index + 1);
     }
   };
   const onScrollDown = () => {
-    if (scrollIndex > -fakeColors.length - 1) {
+    if (scrollIndex > -fakeColors.length + 1) {
       console.log(scrollIndex);
       setScrollIndex((index) => index - 1);
     }
@@ -40,7 +45,7 @@ function ColorCarousel({ setWelcome }) {
     var g = Math.max((num & 0x0000ff) - 35, 0);
     var newColor = g | (b << 8) | (r << 16);
     newColor = "#" + newColor.toString(16);
-    console.log(typeof textColor);
+    const label = showHex ? color.hex : color.name;
     return (
       <View
         key={color.hex}
@@ -53,7 +58,9 @@ function ColorCarousel({ setWelcome }) {
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: newColor }}>{color.name}</Text>
+        <Text onPress={toggleHex} style={{ color: newColor, fontSize: 20 }}>
+          {label}
+        </Text>
       </View>
     );
   });
