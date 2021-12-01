@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: "black",
+    opacity: 0.5,
   },
   scrollDownButton: {
     position: "absolute",
@@ -54,10 +55,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
-    // width: 100,
+    width: 100,
     borderRadius: 4,
     elevation: 3,
     backgroundColor: "black",
+    opacity: 0.5,
+  },
+  backButton: {
+    position: "absolute",
+    bottom: 50,
+    right: 50,
+  },
+  copyButton: {
+    position: "absolute",
+    bottom: 50,
+    left: 50,
   },
 });
 

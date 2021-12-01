@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Animated, View, Text, Pressable, Dimensions } from "react-native";
 import styles from "./styles";
+import { AntDesign, Feather } from "react-native-vector-icons";
 
 const fakeColors = [
   { name: "lightblue", hex: "#add8e6" },
@@ -27,7 +28,6 @@ function ColorCarousel({ setWelcome }) {
   };
   const onScrollDown = () => {
     if (scrollIndex > -fakeColors.length + 1) {
-      console.log(scrollIndex);
       setScrollIndex((index) => index - 1);
     }
   };
@@ -78,14 +78,26 @@ function ColorCarousel({ setWelcome }) {
         {colorScroll}
       </Animated.View>
       <Pressable style={styles.scrollUpButton} onPress={onScrollUp}>
-        <Text style={{ color: "white" }}>Up</Text>
+        <Text style={{ color: "white" }}>
+          <AntDesign name="caretup" />
+        </Text>
       </Pressable>
       <Pressable style={styles.scrollDownButton} onPress={onScrollDown}>
-        <Text style={{ color: "white" }}>DOWN</Text>
+        <Text style={{ color: "white" }}>
+          <AntDesign name="caretdown" />
+        </Text>
       </Pressable>
-      {/* <Pressable style={styles.stopButton} onPress={() => setWelcome(true)}>
-        <Text>Stop</Text>
-      </Pressable> */}
+      <Pressable style={styles.backButton} onPress={() => setWelcome(true)}>
+        <AntDesign name="back" size={24} color="white" />
+      </Pressable>
+      <Pressable
+        style={styles.copyButton}
+        onPress={() => {
+          console.log(fakeColors[-scrollIndex].hex);
+        }}
+      >
+        <Feather name="copy" size={24} color="white" />
+      </Pressable>
     </View>
   );
 }
