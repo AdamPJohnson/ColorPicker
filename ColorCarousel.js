@@ -1,7 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Animated, View, Text, Pressable, Dimensions } from "react-native";
+import {
+  Animated,
+  View,
+  Text,
+  Pressable,
+  Dimensions,
+  Modal,
+} from "react-native";
 import styles from "./styles";
-import { AntDesign, Feather } from "react-native-vector-icons";
+import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 
 const fakeColors = [
   { name: "lightblue", hex: "#add8e6" },
@@ -17,6 +24,7 @@ function ColorCarousel({ setWelcome }) {
   // const [scroll, setScroll] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showHex, setShowHex] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -98,6 +106,38 @@ function ColorCarousel({ setWelcome }) {
       >
         <Feather name="copy" size={24} color="white" />
       </Pressable>
+      <Pressable
+        style={styles.addButton}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Ionicons name="ios-add" size={32} color="white" />
+      </Pressable>
+      <Modal
+        style={styles.addColorModal}
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.innerModal}>
+            <Text>Test</Text>
+            <Pressable
+              style={styles.closeModalButton}
+              onPress={() => {
+                setModalVisible(false);
+              }}
+            >
+              <Ionicons name="ios-close" size={24} color="black" />
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

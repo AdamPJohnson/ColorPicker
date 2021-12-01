@@ -14,13 +14,13 @@ export default function App() {
       {welcome && (
         <View style={styles.welcomeContainer}>
           <>
-            <Text>Welcome! Click START below to get started...</Text>
+            <Text>Enter a word below to get started...</Text>
             <TextInput
               style={styles.input}
               value={searchColor}
               onChangeText={(text) => setSearchColor(text)}
             />
-            <Button title="Start!" onPress={() => setWelcome(false)} />
+            <Button title="Search!" onPress={() => setWelcome(false)} />
           </>
         </View>
       )}

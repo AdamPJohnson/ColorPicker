@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "relative",
-    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: bgColor,
     alignItems: "center",
     justifyContent: "center",
@@ -70,6 +71,38 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 50,
     left: 50,
+  },
+  addButton: {
+    position: "absolute",
+    bottom: 85,
+  },
+  addColorModal: {
+    position: "absolute",
+  },
+  centeredView: {
+    height: "100%",
+    width: "100%",
+
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  innerModal: {
+    width: "90%",
+    height: "80%",
+    backgroundColor: "white",
+    opacity: 0.9,
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeModalButton: {
+    position: "absolute",
+    top: 20,
+    right: 20,
   },
 });
 
