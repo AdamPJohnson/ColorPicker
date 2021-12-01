@@ -5,7 +5,6 @@ app.use(express.urlencoded({ extended: true }));
 const { colors } = require("./models");
 app.get("/colors/:word", (req, res) => {
   const { word } = req.params;
-
   colors
     .byWord(word)
     .then((result) => {
@@ -13,21 +12,26 @@ app.get("/colors/:word", (req, res) => {
     })
     .catch((e) => console.log(e));
 });
+
 app.get("/randomColors/:num", (req, res) => {
   const totalColors = 100;
   const { num } = req.params;
-
   let array = [];
   for (let i = 0; i < num; i++) {
     array.push(Math.floor(Math.random() * totalColors));
   }
-
   colors
     .getRandom(array)
     .then((result) => {
       res.status(200).send(result.rows);
     })
     .catch((e) => console.log(e));
+});
+
+app.post("/colors", (req, res) => {
+  console.log(req.body);
+  const { colorName, color, description } = req.body;
+  const words = description.split(",").map((e) => e.trim().toLowerCase());
 });
 
 module.exports = app;

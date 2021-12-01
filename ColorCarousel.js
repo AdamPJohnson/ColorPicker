@@ -11,6 +11,7 @@ import {
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import ColorPicker from "react-native-wheel-color-picker";
+import axios from "axios";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -42,6 +43,11 @@ function ColorCarousel({ setWelcome, currentColors }) {
 
   const submitColor = () => {
     console.log({ colorName, color, description });
+    axios.post("http://localhost:8080/colors", {
+      colorName,
+      color,
+      description,
+    });
   };
   useEffect(() => {
     Animated.timing(scroll, {
@@ -141,7 +147,23 @@ function ColorCarousel({ setWelcome, currentColors }) {
         }}
       >
         <View style={styles.centeredView}>
-          <View style={styles.innerModal}>
+          <View
+            style={{
+              width: "90%",
+              height: "75%",
+              backgroundColor: color,
+              opacity: 0.9,
+              borderRadius: 10,
+              display: "flex",
+              flexDirection: "column",
+
+              alignItems: "center",
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.5,
+              shadowRadius: 5,
+            }}
+          >
             <Text style={styles.colorNameLabel}>Color Name:</Text>
             <TextInput
               style={styles.input}
