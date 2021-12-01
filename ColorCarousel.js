@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
+import ColorPicker from "react-native-wheel-color-picker";
 
 const fakeColors = [
   { name: "lightblue", hex: "#add8e6" },
@@ -25,6 +26,7 @@ function ColorCarousel({ setWelcome }) {
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showHex, setShowHex] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [color, setColor] = useState("#ffffff");
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -126,7 +128,19 @@ function ColorCarousel({ setWelcome }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.innerModal}>
-            <Text>Test</Text>
+            <ColorPicker
+              style={styles.picker}
+              color={color}
+              // onColorChange={(c) => setColor(c)}
+              // onColorChangeComplete={this.onColorChangeComplete}
+              thumbSize={20}
+              sliderSize={100}
+              noSnap={true}
+              row={false}
+              swatchesLast={true}
+              swatches={true}
+              // discrete={false}
+            />
             <Pressable
               style={styles.closeModalButton}
               onPress={() => {

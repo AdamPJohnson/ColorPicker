@@ -96,13 +96,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    // justifyContent: "space-between",
     alignItems: "center",
   },
   closeModalButton: {
     position: "absolute",
     top: 20,
     right: 20,
+  },
+  picker: {
+    margin: 100,
+    width: "80%",
+    // height: "100%",
   },
 });
 
