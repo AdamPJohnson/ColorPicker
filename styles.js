@@ -82,17 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  innerModal: {
-    width: "90%",
-    height: "80%",
-    backgroundColor: "whitesmoke",
-    opacity: 0.9,
-    borderRadius: 10,
-    display: "flex",
-    flexDirection: "column",
-    // justifyContent: "space-between",
-    alignItems: "center",
-  },
   closeModalButton: {
     position: "absolute",
     top: 20,
@@ -108,6 +97,15 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 8,
+  },
+  submitButton: {
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "whitesmoke",
+    padding: 5,
+    borderRadius: 5,
+    opacity: 0.8,
   },
 });
 

@@ -152,7 +152,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
               width: "90%",
               height: "75%",
               backgroundColor: color,
-              opacity: 0.9,
+              opacity: 1,
               borderRadius: 10,
               display: "flex",
               flexDirection: "column",
@@ -179,9 +179,10 @@ function ColorCarousel({ setWelcome, currentColors }) {
               value={description}
               onChangeText={(text) => setDescription(text)}
             />
-            <Pressable onPress={submitColor}>
+            <Pressable style={styles.submitButton} onPress={submitColor}>
               <Text>Submit</Text>
             </Pressable>
+            <Text>{color}</Text>
             <ColorPicker
               style={styles.picker}
               color={color}
