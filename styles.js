@@ -42,9 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
+    width: 100,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "grey",
+    backgroundColor: "black",
   },
   scrollDownButton: {
     position: "absolute",
@@ -53,9 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
+    // width: 100,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "grey",
+    backgroundColor: "black",
   },
 });
 
