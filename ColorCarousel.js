@@ -6,17 +6,12 @@ import {
   Pressable,
   Dimensions,
   Modal,
+  TextInput,
 } from "react-native";
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import ColorPicker from "react-native-wheel-color-picker";
 
-const fakeColors = [
-  { name: "lightblue", hex: "#add8e6" },
-  { name: "coral", hex: "#ff7f50" },
-  { name: "salmon", hex: "#fa8072" },
-  { name: "dodgerblue", hex: "#1e90ff" },
-];
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 function ColorCarousel({ setWelcome, currentColors }) {
@@ -28,6 +23,8 @@ function ColorCarousel({ setWelcome, currentColors }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [color, setColor] = useState("#ffffff");
   const [buttonColor, setButtonColor] = useState("#ffffff");
+  const [colorName, setColorName] = useState("");
+  const [description, setDescription] = useState("");
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -41,6 +38,10 @@ function ColorCarousel({ setWelcome, currentColors }) {
     if (scrollIndex > -currentColors.length + 1) {
       setScrollIndex((index) => index - 1);
     }
+  };
+
+  const submitColor = () => {
+    console.log({ colorName, color, description });
   };
   useEffect(() => {
     Animated.timing(scroll, {
@@ -141,13 +142,31 @@ function ColorCarousel({ setWelcome, currentColors }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.innerModal}>
+            <Text style={styles.colorNameLabel}>Color Name:</Text>
+            <TextInput
+              style={styles.input}
+              value={colorName}
+              onChangeText={(text) => setColorName(text)}
+            />
+            <Text style={styles.descriptionLabel}>Description:</Text>
+            <Text style={styles.descriptionText}>
+              (List of Words Separated By Commas)
+            </Text>
+            <TextInput
+              style={styles.input}
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <Pressable onPress={submitColor}>
+              <Text>Submit</Text>
+            </Pressable>
             <ColorPicker
               style={styles.picker}
               color={color}
-              // onColorChange={(c) => setColor(c)}
+              onColorChange={(c) => setColor(c)}
               // onColorChangeComplete={this.onColorChangeComplete}
-              thumbSize={20}
-              sliderSize={100}
+              thumbSize={30}
+              sliderSize={20}
               noSnap={true}
               row={false}
               swatchesLast={true}

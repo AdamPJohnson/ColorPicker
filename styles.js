@@ -103,6 +103,12 @@ const styles = StyleSheet.create({
     width: "80%",
     // height: "100%",
   },
+  colorNameLabel: {
+    marginTop: 20,
+  },
+  descriptionText: {
+    fontSize: 8,
+  },
 });
 
 export default styles;
