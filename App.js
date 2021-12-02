@@ -16,10 +16,13 @@ export default function App() {
       axios
         .get(`http://localhost:8080/colors/${searchWord}`)
         .then((response) => {
-          console.log(response.data);
-          setCurrentColors(response.data);
-          setWelcome(false);
-          setErrorMessage("");
+          if (response.data.length) {
+            setCurrentColors(response.data);
+            setWelcome(false);
+            setErrorMessage("");
+          } else {
+            setErrorMessage("No colors match that word...");
+          }
         })
         .catch((e) => {
           setErrorMessage("Something went wrong... please try again.");
@@ -34,7 +37,6 @@ export default function App() {
     axios
       .get("http://localhost:8080/randomColors/5")
       .then((response) => {
-        console.log("weeeee");
         setCurrentColors(response.data);
         setWelcome(false);
         setErrorMessage("");

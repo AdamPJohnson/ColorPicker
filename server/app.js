@@ -29,7 +29,6 @@ app.get("/randomColors/:num", (req, res) => {
 });
 
 app.post("/colors", (req, res) => {
-  console.log(req.body);
   const { colorName, color } = req.body;
   let { description } = req.body;
   description = description || "";
@@ -47,7 +46,6 @@ app.post("/colors", (req, res) => {
       );
     })
     .then((wordResultArray) => {
-      console.log({ wordResultArray });
       const wordIdArray = wordResultArray.map((r) => r.rows[0].id);
       return Promise.all(
         wordIdArray.map((wordId) => {

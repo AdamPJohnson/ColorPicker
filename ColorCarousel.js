@@ -42,12 +42,18 @@ function ColorCarousel({ setWelcome, currentColors }) {
   };
 
   const submitColor = () => {
-    console.log({ colorName, color, description });
-    axios.post("http://localhost:8080/colors", {
-      colorName,
-      color,
-      description,
-    });
+    axios
+      .post("http://localhost:8080/colors", {
+        colorName,
+        color,
+        description,
+      })
+      .then((d) => {
+        console.log(d);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   useEffect(() => {
     Animated.timing(scroll, {
