@@ -31,7 +31,7 @@ app.get("/randomColors/:num", (req, res) => {
 app.post("/colors", (req, res) => {
   const { colorName, color } = req.body;
   let { description } = req.body;
-  description = description || "";
+  description = description + `, ${colorName}` || colorName;
   let colorId;
   const newWords = description.split(",").map((e) => e.trim().toLowerCase());
 
@@ -53,8 +53,13 @@ app.post("/colors", (req, res) => {
         })
       );
     })
-    .then((result) => console.log(result))
-    .catch((e) => console.log(e));
+    .then((result) => {
+      res.status(201).send();
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send();
+    });
 });
 
 module.exports = app;

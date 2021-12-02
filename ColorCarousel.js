@@ -49,6 +49,11 @@ function ColorCarousel({ setWelcome, currentColors }) {
         description,
       })
       .then((d) => {
+        console.log("fog");
+        setModalVisible(false);
+        setColor("#ffffff");
+        setColorName("");
+        setDescription("");
         console.log(d);
       })
       .catch((e) => {
