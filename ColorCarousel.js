@@ -23,7 +23,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
   const [showHex, setShowHex] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [color, setColor] = useState("#ffffff");
-  const [buttonColor, setButtonColor] = useState("#ffffff");
+
   const [colorName, setColorName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -61,13 +61,6 @@ function ColorCarousel({ setWelcome, currentColors }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
-
-    if (currentColors[-scrollIndex].hex === "#FFFFFF") {
-      setButtonColor("#000001");
-    }
-    if (currentColors[-scrollIndex].hex === "#000000") {
-      setButtonColor("#FFFFFF");
-    }
   }, [scrollIndex]);
 
   const colorScroll = currentColors.map((color) => {
@@ -124,7 +117,12 @@ function ColorCarousel({ setWelcome, currentColors }) {
         <AntDesign name="caretdown" size={24} color="white" />
       </Pressable>
       <Pressable style={styles.backButton} onPress={() => setWelcome(true)}>
-        <AntDesign name="back" size={24} color={buttonColor} />
+        <AntDesign
+          style={{ textAlign: "center" }}
+          name="back"
+          size={24}
+          color="black"
+        />
       </Pressable>
       <Pressable
         style={styles.copyButton}
@@ -132,7 +130,12 @@ function ColorCarousel({ setWelcome, currentColors }) {
           console.log(currentColors[-scrollIndex].hex);
         }}
       >
-        <Feather name="copy" size={24} color={buttonColor} />
+        <Feather
+          style={{ textAlign: "center" }}
+          name="copy"
+          size={24}
+          color="black"
+        />
       </Pressable>
       <Pressable
         style={styles.addButton}
@@ -140,7 +143,12 @@ function ColorCarousel({ setWelcome, currentColors }) {
           setModalVisible(true);
         }}
       >
-        <Ionicons name="ios-add" size={32} color={buttonColor} />
+        <Ionicons
+          name="ios-add"
+          style={{ textAlign: "center" }}
+          size={32}
+          color="black"
+        />
       </Pressable>
       <Modal
         style={styles.addColorModal}
@@ -208,7 +216,12 @@ function ColorCarousel({ setWelcome, currentColors }) {
                 setModalVisible(false);
               }}
             >
-              <Ionicons name="ios-close" size={24} color="black" />
+              <Ionicons
+                style={{ textAlign: "center" }}
+                name="ios-close"
+                size={24}
+                color="black"
+              />
             </Pressable>
           </View>
         </View>
