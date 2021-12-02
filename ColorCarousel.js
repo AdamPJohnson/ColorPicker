@@ -17,9 +17,6 @@ import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import ColorPicker from "react-native-wheel-color-picker";
 import axios from "axios";
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-
 function ColorCarousel({ setWelcome, currentColors }) {
   const scroll = useRef(new Animated.Value(0)).current;
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -30,6 +27,17 @@ function ColorCarousel({ setWelcome, currentColors }) {
   const [description, setDescription] = useState("");
   const scrollUpVis = scrollIndex !== 0;
   const scrollDownVis = scrollIndex !== -currentColors.length + 1;
+  const [windowWidth, setWindowWidth] = useState(
+    Dimensions.get("window").width
+  );
+  const [windowHeight, setWindowHeight] = useState(
+    Dimensions.get("window").height
+  );
+
+  Dimensions.addEventListener("change", () => {
+    setWindowWidth(Dimensions.get("window").width);
+    setWindowHeight(Dimensions.get("window").height);
+  });
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -73,7 +81,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
-  }, [scrollIndex]);
+  }, [scrollIndex, windowHeight]);
 
   const colorScroll = currentColors.map((color) => {
     var newColor = similarColor(color);
