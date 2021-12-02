@@ -81,7 +81,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
     const label = showHex ? color.hex : color.name;
     return (
       <View
-        key={color.hex}
+        key={color.id}
         style={{
           zIndex: -1,
           backgroundColor: color.hex,
@@ -245,20 +245,19 @@ export default ColorCarousel;
 //// Shifts color to either slightly darker or lighter depending on darkness.
 function similarColor(color) {
   var num = parseInt(color.hex.slice(1), 16);
-  let [r, b, g] = [num >> 16, (num >> 8) & 0x00ff, num & 0x000ff];
-  const hues = [r, b, g];
+  let [red, green, blue] = [num >> 16, (num >> 8) & 0x00ff, num & 0x000ff];
+  const hues = [red, blue, green];
   const dark = hues.every((hue) => hue < 55);
 
   if (!dark) {
-    r = r === 255 ? 230 : Math.max((num >> 16) - 35, 0);
-    g = g === 255 ? 230 : Math.max(((num >> 8) & 0x00ff) - 25, 0);
-    b = b === 255 ? 230 : Math.max((num & 0x0000ff) - 25, 0);
-    var newColor = `rgb(${r},${g},${b})`;
+    red = Math.max(red - 35, 0);
+    green = Math.max(green - 25, 0);
+    blue = Math.max(blue - 25, 0);
+    return `rgb(${red},${green},${blue})`;
   } else {
-    r = r === 0 ? 30 : Math.min((num >> 16) + 55, 255);
-    g = g === 0 ? 30 : Math.min(((num >> 8) & 0x00ff) + 55, 255);
-    b = b === 0 ? 30 : Math.min((num & 0x0000ff) + 55, 255);
-    var newColor = `rgb(${r},${g},${b})`;
+    red = Math.min(red + 55, 255);
+    green = Math.min(green + 55, 255);
+    blue = Math.min(blue + 55, 255);
+    return `rgb(${red},${green},${blue})`;
   }
-  return newColor;
 }
