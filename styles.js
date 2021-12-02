@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "black",
+    backgroundColor: "grey",
     opacity: 0.5,
   },
   scrollDownButton: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "black",
+    backgroundColor: "grey",
     opacity: 0.5,
   },
   backButton: {

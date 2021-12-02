@@ -7,6 +7,9 @@ import {
   Dimensions,
   Modal,
   TextInput,
+  Alert,
+  SafeAreaView,
+  TouchableHighlight,
 } from "react-native";
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
@@ -15,17 +18,18 @@ import axios from "axios";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
 function ColorCarousel({ setWelcome, currentColors }) {
   const scrollTopMax = -1 * (currentColors.length - 1) * windowHeight;
-  const scroll = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-  // const [scroll, setScroll] = useState(0);
+  const scroll = useRef(new Animated.Value(0)).current;
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showHex, setShowHex] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [color, setColor] = useState("#ffffff");
-
   const [colorName, setColorName] = useState("");
   const [description, setDescription] = useState("");
+  const scrollUpVis = scrollIndex !== 0;
+  const scrollDownVis = scrollIndex !== -currentColors.length + 1;
 
   const toggleHex = () => {
     setShowHex((hex) => !hex);
@@ -42,6 +46,10 @@ function ColorCarousel({ setWelcome, currentColors }) {
   };
 
   const submitColor = () => {
+    if (colorName === "") {
+      Alert.alert("Invalid Color Name", "Please enter a color name...");
+      return;
+    }
     axios
       .post("http://localhost:8080/colors", {
         colorName,
@@ -69,20 +77,32 @@ function ColorCarousel({ setWelcome, currentColors }) {
   }, [scrollIndex]);
 
   const colorScroll = currentColors.map((color) => {
-    var num = parseInt(color.hex.slice(1), 16);
-    var r = Math.max((num >> 16) - 35, 0);
-    var b = Math.max(((num >> 8) & 0x00ff) - 35, 0);
-    var g = Math.max((num & 0x0000ff) - 35, 0);
-    var newColor = g | (b << 8) | (r << 16);
-    newColor = "#" + newColor.toString(16);
-
-    if (newColor === "#0" || newColor === "#000000") {
-      newColor = "#fffffe";
+    // console.log(parseInt(color.hex.slice(1), 16));
+    const dark = parseInt(color.hex.slice(1), 16) < 1600000;
+    console.log(dark);
+    if (!dark) {
+      var num = parseInt(color.hex.slice(1), 16);
+      var r = Math.max((num >> 16) - 35, 0);
+      var b = Math.max(((num >> 8) & 0x00ff) - 25, 0);
+      var g = Math.max((num & 0x0000ff) - 25, 0);
+      var newColor = g | (b << 8) | (r << 16);
+      newColor = "#" + newColor.toString(16);
+    } else {
+      var num = parseInt(color.hex.slice(1), 16);
+      var r = Math.min((num >> 16) + 55, 255);
+      var b = Math.min(((num >> 8) & 0x00ff) + 55, 255);
+      var g = Math.min((num & 0x0000ff) + 55, 255);
+      var newColor = g | (b << 8) | (r << 16);
+      newColor = "#" + newColor.toString(16);
     }
-    if (newColor === "#ffffff") {
-      newColor = "#000001";
-    }
-
+    // console.log(newColor);
+    // if (newColor === "#0" || newColor === "#000000") {
+    //   newColor = "#fffffe";
+    // }
+    // if (newColor === "#ffffff") {
+    //   newColor = "#000001";
+    // }
+    // newColor = "rgba(0,0,0,0.1)";
     const label = showHex ? color.hex : color.name;
     return (
       <View
@@ -94,6 +114,9 @@ function ColorCarousel({ setWelcome, currentColors }) {
           height: windowHeight,
           alignItems: "center",
           justifyContent: "center",
+          textShadowColor: "rgba(255, 255, 255,1)",
+          textShadowOffset: 5,
+          textShadowRadius: 100,
         }}
       >
         <Text onPress={toggleHex} style={{ color: newColor, fontSize: 20 }}>
@@ -103,7 +126,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
     );
   });
   return (
-    <View style={styles.colorScrollContainer}>
+    <SafeAreaView style={styles.colorScrollContainer}>
       <Animated.View
         style={{
           transition: "top 100ms ease 0s",
@@ -115,12 +138,19 @@ function ColorCarousel({ setWelcome, currentColors }) {
       >
         {colorScroll}
       </Animated.View>
-      <Pressable style={styles.scrollUpButton} onPress={onScrollUp}>
-        <AntDesign name="caretup" size={24} color="white" />
-      </Pressable>
-      <Pressable style={styles.scrollDownButton} onPress={onScrollDown}>
-        <AntDesign name="caretdown" size={24} color="white" />
-      </Pressable>
+      {scrollUpVis && (
+        <TouchableHighlight style={styles.scrollUpButton} onPress={onScrollUp}>
+          <AntDesign name="caretup" size={24} color="white" />
+        </TouchableHighlight>
+      )}
+      {scrollDownVis && (
+        <TouchableHighlight
+          style={styles.scrollDownButton}
+          onPress={onScrollDown}
+        >
+          <AntDesign name="caretdown" size={24} color="white" />
+        </TouchableHighlight>
+      )}
       <Pressable style={styles.backButton} onPress={() => setWelcome(true)}>
         <AntDesign
           style={{ textAlign: "center" }}
@@ -231,7 +261,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
