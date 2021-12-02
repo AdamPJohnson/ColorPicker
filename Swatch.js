@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
-
+import { View, Text, Pressable } from "react-native";
+import { FontAwesome } from "react-native-vector-icons";
 function Swatch({ color, windowWidth, windowHeight }) {
   const [showHex, setShowHex] = useState(false);
   const toggleHex = () => {
@@ -23,9 +23,17 @@ function Swatch({ color, windowWidth, windowHeight }) {
         textShadowRadius: 100,
       }}
     >
-      <Text onPress={toggleHex} style={{ color: newColor, fontSize: 20 }}>
-        {label}
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Pressable style={{ margin: 10 }}>
+          <FontAwesome size={20} color={newColor} name="thumbs-o-down" />
+        </Pressable>
+        <Text onPress={toggleHex} style={{ color: newColor, fontSize: 20 }}>
+          {label}
+        </Text>
+        <Pressable style={{ margin: 10 }}>
+          <FontAwesome size={20} color={newColor} name="thumbs-o-up" />
+        </Pressable>
+      </View>
     </View>
   );
 }

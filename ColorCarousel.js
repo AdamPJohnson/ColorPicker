@@ -78,13 +78,26 @@ function ColorCarousel({ setWelcome, currentColors }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
+    return () =>
+      Animated.timing(scroll, {
+        toValue: windowHeight * scrollIndex,
+        duration: 1000,
+        useNativeDriver: false,
+      }).stop();
   }, [scrollIndex]);
+
   useEffect(() => {
     Animated.timing(scroll, {
       toValue: windowHeight * scrollIndex,
       duration: 1,
       useNativeDriver: false,
     }).start();
+    return () =>
+      Animated.timing(scroll, {
+        toValue: windowHeight * scrollIndex,
+        duration: 1,
+        useNativeDriver: false,
+      }).stop();
   }, [windowHeight]);
 
   const colorScroll = currentColors.map((color) => {
