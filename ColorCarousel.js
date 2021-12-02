@@ -15,14 +15,12 @@ import {
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import ColorPicker from "react-native-wheel-color-picker";
-
 import axios from "axios";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 function ColorCarousel({ setWelcome, currentColors }) {
-  const scrollTopMax = -1 * (currentColors.length - 1) * windowHeight;
   const scroll = useRef(new Animated.Value(0)).current;
   const [scrollIndex, setScrollIndex] = useState(0);
   const [showHex, setShowHex] = useState(false);
@@ -78,24 +76,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
   }, [scrollIndex]);
 
   const colorScroll = currentColors.map((color) => {
-    // console.log(color.hex);
-    //// Shifts color to either slightly darker or lighter depending on darkness.
-    var num = parseInt(color.hex.slice(1), 16);
-    let [r, b, g] = [num >> 16, (num >> 8) & 0x00ff, num & 0x000ff];
-    const hues = [r, b, g];
-    const dark = hues.every((hue) => hue < 55);
-
-    if (!dark) {
-      r = r === 255 ? 230 : Math.max((num >> 16) - 35, 0);
-      g = g === 255 ? 230 : Math.max(((num >> 8) & 0x00ff) - 25, 0);
-      b = b === 255 ? 230 : Math.max((num & 0x0000ff) - 25, 0);
-      var newColor = `rgb(${r},${g},${b})`;
-    } else {
-      r = r === 0 ? 30 : Math.min((num >> 16) + 55, 255);
-      g = g === 0 ? 30 : Math.min(((num >> 8) & 0x00ff) + 55, 255);
-      b = b === 0 ? 30 : Math.min((num & 0x0000ff) + 55, 255);
-      var newColor = `rgb(${r},${g},${b})`;
-    }
+    var newColor = similarColor(color);
 
     const label = showHex ? color.hex : color.name;
     return (
@@ -260,3 +241,24 @@ function ColorCarousel({ setWelcome, currentColors }) {
 }
 
 export default ColorCarousel;
+
+//// Shifts color to either slightly darker or lighter depending on darkness.
+function similarColor(color) {
+  var num = parseInt(color.hex.slice(1), 16);
+  let [r, b, g] = [num >> 16, (num >> 8) & 0x00ff, num & 0x000ff];
+  const hues = [r, b, g];
+  const dark = hues.every((hue) => hue < 55);
+
+  if (!dark) {
+    r = r === 255 ? 230 : Math.max((num >> 16) - 35, 0);
+    g = g === 255 ? 230 : Math.max(((num >> 8) & 0x00ff) - 25, 0);
+    b = b === 255 ? 230 : Math.max((num & 0x0000ff) - 25, 0);
+    var newColor = `rgb(${r},${g},${b})`;
+  } else {
+    r = r === 0 ? 30 : Math.min((num >> 16) + 55, 255);
+    g = g === 0 ? 30 : Math.min(((num >> 8) & 0x00ff) + 55, 255);
+    b = b === 0 ? 30 : Math.min((num & 0x0000ff) + 55, 255);
+    var newColor = `rgb(${r},${g},${b})`;
+  }
+  return newColor;
+}
