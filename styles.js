@@ -23,11 +23,16 @@ const styles = StyleSheet.create({
     height: 30,
     width: "80%",
     borderWidth: 1,
+    borderColor: "white",
     textAlign: "center",
     borderRadius: 5,
     borderColor: "rgba(0,0,0,0.2)",
     backgroundColor: "whitesmoke",
     margin: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 5,
   },
 
   scrollUpButton: {

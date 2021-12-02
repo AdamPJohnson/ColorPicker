@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import { Text, View, Button, TextInput } from "react-native";
 import styles from "./styles";
 import axios from "axios";
-
 export default function App() {
   const [currentColors, setCurrentColors] = useState([]);
   const [welcome, setWelcome] = useState(true);
   const [searchWord, setSearchWord] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [backgroundColor, setBackgrondColor] = useState("white");
+  const backgroundColor = "rgba(50,200,255,0.1)";
+  const buttonColor = "lightblue";
   const searchForWord = () => {
     if (searchWord.length) {
       axios
@@ -47,34 +47,14 @@ export default function App() {
       });
     /////handle this
   };
-  const getOneRandom = () => {
-    axios
-      .get("http://localhost:8080/randomColors/1")
-      .then((response) => {
-        setBackgrondColor(response.data[0].hex);
-      })
-      .catch((e) => {
-        setErrorMessage("Something went wrong... please try again.");
-        console.log(e);
-      });
-    /////handle this
-  };
-  function addAlpha(color, opacity) {
-    // coerce values so ti is between 0 and 1.
-    var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-    return color + _opacity.toString(16).toUpperCase();
-  }
 
-  // useEffect(() => {
-  //   getOneRandom();
-  // }, [welcome]);
   return (
     <>
       {welcome && (
         <View
           style={{
             flex: 1,
-            backgroundColor: addAlpha(backgroundColor, 0.3),
+            backgroundColor: backgroundColor,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -87,8 +67,16 @@ export default function App() {
               onChangeText={(text) => setSearchWord(text)}
             />
             <Text style={styles.errorMessage}>{errorMessage}</Text>
-            <Button title="Search!" onPress={searchForWord} />
-            <Button title="Random!" onPress={getFiveRandom} />
+            <Button
+              color={buttonColor}
+              title="Search!"
+              onPress={searchForWord}
+            />
+            <Button
+              color={buttonColor}
+              title="Random!"
+              onPress={getFiveRandom}
+            />
           </>
         </View>
       )}

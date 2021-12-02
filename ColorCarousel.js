@@ -10,10 +10,12 @@ import {
   Alert,
   SafeAreaView,
   TouchableHighlight,
+  Clipboard,
 } from "react-native";
 import styles from "./styles";
 import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import ColorPicker from "react-native-wheel-color-picker";
+
 import axios from "axios";
 
 const windowWidth = Dimensions.get("window").width;
@@ -57,7 +59,6 @@ function ColorCarousel({ setWelcome, currentColors }) {
         description,
       })
       .then((d) => {
-        console.log("fog");
         setModalVisible(false);
         setColor("#ffffff");
         setColorName("");
@@ -77,32 +78,25 @@ function ColorCarousel({ setWelcome, currentColors }) {
   }, [scrollIndex]);
 
   const colorScroll = currentColors.map((color) => {
-    // console.log(parseInt(color.hex.slice(1), 16));
-    const dark = parseInt(color.hex.slice(1), 16) < 1600000;
-    console.log(dark);
+    // console.log(color.hex);
+    //// Shifts color to either slightly darker or lighter depending on darkness.
+    var num = parseInt(color.hex.slice(1), 16);
+    let [r, b, g] = [num >> 16, (num >> 8) & 0x00ff, num & 0x000ff];
+    const hues = [r, b, g];
+    const dark = hues.every((hue) => hue < 55);
+
     if (!dark) {
-      var num = parseInt(color.hex.slice(1), 16);
-      var r = Math.max((num >> 16) - 35, 0);
-      var b = Math.max(((num >> 8) & 0x00ff) - 25, 0);
-      var g = Math.max((num & 0x0000ff) - 25, 0);
-      var newColor = g | (b << 8) | (r << 16);
-      newColor = "#" + newColor.toString(16);
+      r = r === 255 ? 230 : Math.max((num >> 16) - 35, 0);
+      g = g === 255 ? 230 : Math.max(((num >> 8) & 0x00ff) - 25, 0);
+      b = b === 255 ? 230 : Math.max((num & 0x0000ff) - 25, 0);
+      var newColor = `rgb(${r},${g},${b})`;
     } else {
-      var num = parseInt(color.hex.slice(1), 16);
-      var r = Math.min((num >> 16) + 55, 255);
-      var b = Math.min(((num >> 8) & 0x00ff) + 55, 255);
-      var g = Math.min((num & 0x0000ff) + 55, 255);
-      var newColor = g | (b << 8) | (r << 16);
-      newColor = "#" + newColor.toString(16);
+      r = r === 0 ? 30 : Math.min((num >> 16) + 55, 255);
+      g = g === 0 ? 30 : Math.min(((num >> 8) & 0x00ff) + 55, 255);
+      b = b === 0 ? 30 : Math.min((num & 0x0000ff) + 55, 255);
+      var newColor = `rgb(${r},${g},${b})`;
     }
-    // console.log(newColor);
-    // if (newColor === "#0" || newColor === "#000000") {
-    //   newColor = "#fffffe";
-    // }
-    // if (newColor === "#ffffff") {
-    //   newColor = "#000001";
-    // }
-    // newColor = "rgba(0,0,0,0.1)";
+
     const label = showHex ? color.hex : color.name;
     return (
       <View
@@ -162,7 +156,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
       <Pressable
         style={styles.copyButton}
         onPress={() => {
-          console.log(currentColors[-scrollIndex].hex);
+          Clipboard.setString(currentColors[-scrollIndex].hex);
         }}
       >
         <Feather
