@@ -81,7 +81,14 @@ function ColorCarousel({ setWelcome, currentColors }) {
       duration: 1000,
       useNativeDriver: false,
     }).start();
-  }, [scrollIndex, windowHeight]);
+  }, [scrollIndex]);
+  useEffect(() => {
+    Animated.timing(scroll, {
+      toValue: windowHeight * scrollIndex,
+      duration: 1,
+      useNativeDriver: false,
+    }).start();
+  }, [windowHeight]);
 
   const colorScroll = currentColors.map((color) => {
     var newColor = similarColor(color);
