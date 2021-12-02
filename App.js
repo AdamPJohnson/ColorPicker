@@ -26,6 +26,8 @@ export default function App() {
           console.log(e);
         });
       /////handle this
+    } else {
+      setErrorMessage("Please enter a word");
     }
   };
   const getFiveRandom = () => {

@@ -13,4 +13,9 @@ module.exports = {
       `select * from colors where id in (select color_id from associations where word_id=(select id from words where word='${word.toLowerCase()}') ORDER BY RANDOM() LIMIT 3) ;`
     );
   },
+  add: (colorName, color) => {
+    return pool.query(
+      `INSERT INTO colors (name, hex) VALUES ('${colorName}','${color}') ON CONFLICT ON CONSTRAINT unique_color DO UPDATE SET hex='${color}' RETURNING id `
+    );
+  },
 };
