@@ -15,7 +15,8 @@ app.get("/colors/:word", (req, res) => {
 
 app.get("/randomColors/:num", (req, res) => {
   const totalColors = 100;
-  const { num } = req.params;
+  let { num } = req.params;
+  num = num || 5;
   let array = [];
   for (let i = 0; i < num; i++) {
     array.push(Math.floor(Math.random() * totalColors));

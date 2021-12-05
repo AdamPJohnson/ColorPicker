@@ -76,6 +76,7 @@ function ColorCarousel({ setWelcome, currentColors }) {
         color={color}
         windowHeight={windowHeight}
         windowWidth={windowWidth}
+        key={color.color}
       />
     );
   });

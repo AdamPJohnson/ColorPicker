@@ -3,12 +3,35 @@ import { Modal, View, Text, Pressable, TextInput } from "react-native";
 import styles from "./styles";
 import ColorPicker from "react-native-wheel-color-picker";
 import { Ionicons } from "react-native-vector-icons";
-
+import axios from "axios";
 function AddColorModal({ modalVisible, setModalVisible }) {
   const [color, setColor] = useState("#ffffff");
   const [colorName, setColorName] = useState("");
   const [description, setDescription] = useState("");
 
+  const submitColor = () => {
+    if (colorName === "") {
+      Alert.alert("Invalid Color Name", "Please enter a color name...");
+      return;
+    }
+
+    axios
+      .post("http://localhost:8080/colors", {
+        colorName,
+        color,
+        description,
+      })
+      .then((d) => {
+        setModalVisible(false);
+        setColor("#ffffff");
+        setColorName("");
+        setDescription("");
+        console.log(d);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Modal
       style={styles.addColorModal}
@@ -88,27 +111,4 @@ function AddColorModal({ modalVisible, setModalVisible }) {
     </Modal>
   );
 }
-
-const submitColor = () => {
-  if (colorName === "") {
-    Alert.alert("Invalid Color Name", "Please enter a color name...");
-    return;
-  }
-  axios
-    .post("http://localhost:8080/colors", {
-      colorName,
-      color,
-      description,
-    })
-    .then((d) => {
-      setModalVisible(false);
-      setColor("#ffffff");
-      setColorName("");
-      setDescription("");
-      console.log(d);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
 export default AddColorModal;
