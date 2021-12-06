@@ -79,6 +79,7 @@ function AddColorModal({ modalVisible, setModalVisible }) {
           <Pressable style={styles.submitButton} onPress={submitColor}>
             <Text>Submit</Text>
           </Pressable>
+
           <Text>{color}</Text>
           <ColorPicker
             style={styles.picker}

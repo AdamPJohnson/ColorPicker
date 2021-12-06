@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 const bgColor = "white";
 
 const styles = StyleSheet.create({
+  welcome: { fontSize: 20, fontWeight: "bold" },
+  welcomeSubtitle: { fontSize: 15, fontStyle: "italic" },
   container: {
     flex: 1,
     backgroundColor: bgColor,
@@ -118,10 +120,11 @@ const styles = StyleSheet.create({
   picker: {
     margin: 100,
     width: "80%",
+
     // height: "100%",
   },
   colorNameLabel: {
-    marginTop: 20,
+    marginTop: 50,
   },
   descriptionText: {
     fontSize: 8,
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     opacity: 0.8,
+    marginBottom: 10,
   },
 });
 

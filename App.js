@@ -60,7 +60,10 @@ export default function App() {
           }}
         >
           <>
-            <Text>Enter a word below to get started...</Text>
+            <Text style={styles.welcome}>Welcome!</Text>
+            <Text style={styles.welcomeSubtitle}>
+              Enter a word below to get started...
+            </Text>
             <TextInput
               style={styles.input}
               value={searchWord}
