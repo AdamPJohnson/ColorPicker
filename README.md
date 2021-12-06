@@ -3,7 +3,7 @@
 
 A simple and elegant React Native app for finding inspiration through color.
 
-<img src="https://i.imgur.com/8fdNm6F.png" alt="ColorPicker home" width="245"/><img src="https://i.imgur.com/3vywmpj.png" alt="ColorPicker swatch" width="240"/>
+<img src="https://i.imgur.com/8fdNm6F.png" alt="ColorPicker home" width="247"/><img src="https://i.imgur.com/3vywmpj.png" alt="ColorPicker swatch" width="242"/>
 <img src="https://i.imgur.com/IXx1z4L.png" alt="ColorPicker wheel" width="240"/>![ColorPicker gif](https://media4.giphy.com/media/0jYrq8E5ouFZwFgMOf/giphy.gif?cid=790b76119fe6169ca572bcf6f99187b860ae7797faf55847&rid=giphy.gif&ct=g)
 
 
