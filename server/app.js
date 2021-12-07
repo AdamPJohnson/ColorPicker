@@ -9,7 +9,9 @@ app.get("/colors/:word", (req, res) => {
   colors
     .byWord(word)
     .then((result) => {
-      res.status(200).send(result.rows);
+      let colors = shuffle(result.rows).slice(0, 5);
+      console.log(colors);
+      res.status(200).send(colors);
     })
     .catch((e) => console.log(e));
 });
@@ -19,7 +21,6 @@ app.patch("/votes/:colorId/:word/:num", (req, res) => {
     .vote(req.params)
     .then(() => res.status(200).send())
     .catch((e) => {
-      console.log(e);
       res.status(400).send(0);
     });
 });
@@ -74,4 +75,20 @@ app.post("/colors", (req, res) => {
     });
 });
 
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
 module.exports = app;

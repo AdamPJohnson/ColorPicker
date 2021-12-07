@@ -26,7 +26,6 @@ function AddColorModal({ modalVisible, setModalVisible }) {
         setColor("#ffffff");
         setColorName("");
         setDescription("");
-        console.log(d);
       })
       .catch((e) => {
         console.log(e);

@@ -10,7 +10,7 @@ module.exports = {
   },
   byWord: (word) => {
     return pool.query(
-      `select * from colors where id in (select color_id from associations where word_id=(select id from words where word='${word.toLowerCase()}') ORDER BY RANDOM() LIMIT 5) ;`
+      `select * from colors where id in (select color_id from associations where word_id=(select id from words where word='${word.toLowerCase()}') ORDER BY vote_score LIMIT 20) ;`
     );
   },
   add: (colorName, color) => {

@@ -12,19 +12,17 @@ function Swatch({ color, windowWidth, windowHeight, random, searchWord }) {
   const updateVote = (colorId, word, num) => {
     axios
       .patch(`http://localhost:8080/votes/${colorId}/${word}/${num}`)
-      .then((d) => console.log(d))
+      .then((d) => {})
       .catch((e) => console.log(e));
   };
 
   const vote = (direction) => {
-    console.log(currentVote);
     if (direction === "up") {
       if (currentVote === "up") {
         updateVote(color.id, searchWord, -1);
         setCurrentVote(null);
       } else {
         setCurrentVote("up");
-
         if (currentVote === "down") {
           updateVote(color.id, searchWord, 2);
         } else {
@@ -33,7 +31,6 @@ function Swatch({ color, windowWidth, windowHeight, random, searchWord }) {
       }
     }
     if (direction === "down") {
-      console.log("down");
       if (currentVote === "down") {
         updateVote(color.id, searchWord, 1);
         setCurrentVote(null);
