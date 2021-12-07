@@ -12,7 +12,7 @@ import { AntDesign, Feather, Ionicons } from "react-native-vector-icons";
 import Swatch from "./Swatch";
 import AddColorModal from "./AddColorModal";
 
-function ColorCarousel({ setWelcome, currentColors }) {
+function ColorCarousel({ setWelcome, currentColors, random, searchWord }) {
   const scroll = useRef(new Animated.Value(0)).current;
   const [scrollIndex, setScrollIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -77,6 +77,8 @@ function ColorCarousel({ setWelcome, currentColors }) {
         windowHeight={windowHeight}
         windowWidth={windowWidth}
         key={color.color}
+        random={random}
+        searchWord={searchWord}
       />
     );
   });

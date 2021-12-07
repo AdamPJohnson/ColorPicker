@@ -8,6 +8,7 @@ export default function App() {
   const [currentColors, setCurrentColors] = useState([]);
   const [welcome, setWelcome] = useState(true);
   const [searchWord, setSearchWord] = useState("");
+  const [random, setRandom] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const backgroundColor = "rgba(50,200,255,0.1)";
   const buttonColor = "lightblue";
@@ -18,6 +19,8 @@ export default function App() {
         .then((response) => {
           if (response.data.length) {
             setCurrentColors(response.data);
+            setRandom(false);
+
             setWelcome(false);
             setErrorMessage("");
           } else {
@@ -37,6 +40,7 @@ export default function App() {
     axios
       .get("http://localhost:8080/randomColors/5")
       .then((response) => {
+        setRandom(true);
         setCurrentColors(response.data);
         setWelcome(false);
         setErrorMessage("");
@@ -84,7 +88,12 @@ export default function App() {
         </View>
       )}
       {!welcome && (
-        <ColorCarousel setWelcome={setWelcome} currentColors={currentColors} />
+        <ColorCarousel
+          setWelcome={setWelcome}
+          random={random}
+          searchWord={searchWord}
+          currentColors={currentColors}
+        />
       )}
       <StatusBar style="auto" />
     </>

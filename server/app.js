@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const { colors, associations, words } = require("./models");
+
 app.get("/colors/:word", (req, res) => {
   const { word } = req.params;
   colors
@@ -11,6 +12,16 @@ app.get("/colors/:word", (req, res) => {
       res.status(200).send(result.rows);
     })
     .catch((e) => console.log(e));
+});
+
+app.patch("/votes/:colorId/:word/:num", (req, res) => {
+  associations
+    .vote(req.params)
+    .then(() => res.status(200).send())
+    .catch((e) => {
+      console.log(e);
+      res.status(400).send(0);
+    });
 });
 
 app.get("/randomColors/:num", (req, res) => {

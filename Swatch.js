@@ -1,11 +1,55 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
-function Swatch({ color, windowWidth, windowHeight }) {
+function Swatch({ color, windowWidth, windowHeight, random, searchWord }) {
   const [showHex, setShowHex] = useState(false);
+  const [currentVote, setCurrentVote] = useState(null);
   const toggleHex = () => {
     setShowHex((hex) => !hex);
   };
+
+  const updateVote = (colorId, word, num) => {
+    axios
+      .patch(`http://localhost:8080/votes/${colorId}/${word}/${num}`)
+      .then((d) => console.log(d))
+      .catch((e) => console.log(e));
+  };
+
+  const vote = (direction) => {
+    console.log(currentVote);
+    if (direction === "up") {
+      if (currentVote === "up") {
+        updateVote(color.id, searchWord, -1);
+        setCurrentVote(null);
+      } else {
+        setCurrentVote("up");
+
+        if (currentVote === "down") {
+          updateVote(color.id, searchWord, 2);
+        } else {
+          updateVote(color.id, searchWord, 1);
+        }
+      }
+    }
+    if (direction === "down") {
+      console.log("down");
+      if (currentVote === "down") {
+        updateVote(color.id, searchWord, 1);
+        setCurrentVote(null);
+      } else {
+        setCurrentVote("down");
+        if (currentVote === "up") {
+          updateVote(color.id, searchWord, -2);
+        } else {
+          updateVote(color.id, searchWord, -1);
+        }
+      }
+    }
+  };
+
+  const downOpacity = currentVote === "down" ? 1 : 0.3;
+  const upOpacity = currentVote === "up" ? 1 : 0.3;
   var newColor = similarColor(color);
   const label = showHex ? color.hex : color.name;
   return (
@@ -24,15 +68,25 @@ function Swatch({ color, windowWidth, windowHeight }) {
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Pressable style={{ margin: 10 }}>
-          <FontAwesome size={20} color={newColor} name="thumbs-o-down" />
-        </Pressable>
+        {!random && (
+          <Pressable
+            onPress={() => vote("down")}
+            style={{ opacity: downOpacity, margin: 10 }}
+          >
+            <FontAwesome size={20} color={newColor} name="thumbs-o-down" />
+          </Pressable>
+        )}
         <Text onPress={toggleHex} style={{ color: newColor, fontSize: 20 }}>
           {label}
         </Text>
-        <Pressable style={{ margin: 10 }}>
-          <FontAwesome size={20} color={newColor} name="thumbs-o-up" />
-        </Pressable>
+        {!random && (
+          <Pressable
+            onPress={() => vote("up")}
+            style={{ opacity: upOpacity, margin: 10 }}
+          >
+            <FontAwesome size={20} color={newColor} name="thumbs-o-up" />
+          </Pressable>
+        )}
       </View>
     </View>
   );
